@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAnalytics } from '../context/AnalyticsContext';
 import { InteractiveChart } from './InteractiveChart';
+import { WeeklyTrafficComparisonWidget } from './WeeklyTrafficComparisonWidget';
 import { GlobalDistributionMap } from './GlobalDistributionMap';
 import { ExportAnalyticsModal } from './ExportAnalyticsModal';
 import { TrafficSpikeWidget } from './TrafficSpikeWidget';
@@ -553,6 +554,9 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Weekly Traffic Comparison Widget */}
+      <WeeklyTrafficComparisonWidget />
 
       {/* Interactive Time-series Chart */}
       <InteractiveChart timeRange={timeRange} onTimeRangeChange={setTimeRange} />

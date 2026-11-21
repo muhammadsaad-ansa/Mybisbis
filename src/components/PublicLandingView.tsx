@@ -6,48 +6,47 @@ import {
   Sparkles, 
   Share2, 
   Video, 
-  Smartphone, 
-  MapPin, 
-  ShieldCheck, 
   CheckCircle2,
-  MousePointerClick
+  CreditCard,
+  Wallet
 } from 'lucide-react';
 
 export const PublicLandingView: React.FC = () => {
-  const { openRegisterModal, openLoginModal } = useAuth();
+  const { openRegisterModal, openLoginModal, openPaymentModal } = useAuth();
 
   return (
     <div className="space-y-16 py-8 text-center">
       {/* Hero Section */}
       <div className="max-w-4xl mx-auto px-4 space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-semibold">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-semibold animate-bounce">
           <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
-          <span>Platform Analitik Tautan Media Sosial #1 Real-Time</span>
+          <span>Akses Langsung: Dasbor Pembayaran & Aktivasi Member VIP</span>
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-3xl mx-auto leading-tight text-balance">
-          Ketahui Persis <span className="text-indigo-600 dark:text-indigo-400">Siapa Saja yang Menekan</span> Tautan di Medsos Anda
+          Buka <span className="text-indigo-600 dark:text-indigo-400">Dasbor Pembayaran</span> PulseTrack & Aktifkan Member VIP
         </h1>
 
         <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-          Pantau trafik pengunjung dari Instagram Bio, TikTok Video, WhatsApp, YouTube Shorts, dan X secara real-time. Deteksi kota asal, jenis HP, dan konten video mana yang paling banyak menghasilkan penjualan.
+          Setiap pengunjung yang mengeklik tautan website ini akan langsung diarahkan ke dasbor pembayaran resmi langganan Member VIP (Rp 60.000/bln) dan komisi afiliasi Rp 10.000.
         </p>
 
-        {/* Hero CTAs */}
+        {/* Hero CTAs - Direct to Payment Dashboard */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <button
-            onClick={openLoginModal}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md shadow-indigo-500/20 transition-all cursor-pointer"
+            onClick={openPaymentModal}
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-lg shadow-indigo-500/25 transition-all cursor-pointer scale-105"
           >
-            <span>Masuk ke Dashboard</span>
+            <CreditCard className="w-4 h-4" />
+            <span>Buka Dasbor Pembayaran (Rp 60.000)</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
           <button
-            onClick={openRegisterModal}
-            className="w-full sm:w-auto px-6 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all cursor-pointer"
+            onClick={openLoginModal}
+            className="w-full sm:w-auto px-6 py-3.5 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all cursor-pointer"
           >
-            Daftar Akun Member (Rp 60.000/bln)
+            Masuk Akun Member
           </button>
         </div>
 
@@ -55,15 +54,15 @@ export const PublicLandingView: React.FC = () => {
         <div className="pt-4 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500">
           <span className="flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-            <span>Pembaruan Real-Time &lt; 1 Detik</span>
+            <span>Transfer Bank BSI & Seluruh Bank Indonesia</span>
           </span>
           <span className="flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-            <span>Analitik Khusus Reels & TikTok</span>
+            <span>Aktivasi Instan & Otomatis</span>
           </span>
           <span className="flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-            <span>Deteksi Kota & Provider Akurat</span>
+            <span>Komisi Afiliasi Rp 10.000/Member</span>
           </span>
         </div>
       </div>
@@ -132,10 +131,11 @@ export const PublicLandingView: React.FC = () => {
 
             <div className="flex items-center gap-3 shrink-0">
               <button
-                onClick={openRegisterModal}
-                className="px-5 py-3 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md transition-all cursor-pointer whitespace-nowrap"
+                onClick={openPaymentModal}
+                className="px-6 py-3.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-md transition-all cursor-pointer whitespace-nowrap flex items-center gap-2"
               >
-                Daftar & Gabung Afiliasi
+                <Wallet className="w-4 h-4" />
+                <span>Buka Dasbor Pembayaran</span>
               </button>
             </div>
           </div>
