@@ -599,3 +599,82 @@ export function exportToPDF(payload: ExportDataPayload) {
   // Save the PDF
   doc.save(`pulsetrack_laporan_resmi_${now.toISOString().split('T')[0]}.pdf`);
 }
+
+// 3. Export Affiliate Withdrawal PDF Receipt
+export interface WithdrawalReceiptPayload {
+  amount: number;
+  method: string;
+  accountNumber: string;
+  accountHolder: string;
+  user: User | null;
+  timestampStr: string;
+}
+
+export function exportAffiliateWithdrawalPDF(payload: WithdrawalReceiptPayload) {
+  const { amount, method, accountNumber, accountHolder, user, timestampStr } = payload;
+  const doc = new jsPDF({
+    orientation: 'portrait',
+    unit: 'pt',
+    format: 'a4',
+  });
+
+  const darkTextColor: [number, number, number] = [15, 23, 42]; // Slate-900
+  const mutedTextColor: [number, number, number] = [100, 116, 139]; // Slate-500
+
+  // Header Banner
+  doc.setFillColor(16, 185, 129);
+  doc.rect(0, 0, 595.28, 80, 'F');
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(18);
+  doc.setFont('helvetica', 'bold');
+  doc.text('BUKTI PENCAIRAN KOMISI AFILIASI', 40, 36);
+
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Program Afiliasi Juara · PulseTrack Cloud Analytics', 40, 56);
+
+  doc.setFontSize(9);
+  doc.text(`Waktu Pencairan: ${timestampStr}`, 555, 46, { align: 'right' });
+
+  let currentY = 110;
+  doc.setTextColor(darkTextColor[0], darkTextColor[1], darkTextColor[2]);
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Rincian Transaksi Pencairan Dana', 40, currentY);
+
+  currentY += 15;
+  const tableData = [
+    ['Nama Akun Afiliasi', user?.name || accountHolder],
+    ['Email Akun', user?.email || 'user@example.com'],
+    ['Nama Pemilik Rekening', accountHolder],
+    ['Metode Tujuan Transfer', method],
+    ['Nomor Rekening / Tujuan', accountNumber],
+    ['Nominal Komisi Dicairkan', `Rp ${amount.toLocaleString('id-ID')}`],
+    ['Status Pencairan', 'BERHASIL / SELESAI (Instant Payout)'],
+    ['Waktu Sistem (Timestamp)', timestampStr],
+  ];
+
+  autoTable(doc, {
+    startY: currentY,
+    head: [['Parameter Transaksi', 'Keterangan Detail']],
+    body: tableData,
+    theme: 'grid',
+    styles: { fontSize: 9.5, cellPadding: 6 },
+    headStyles: { fillColor: [16, 185, 129], textColor: [255, 255, 255], fontStyle: 'bold' },
+    columnStyles: {
+      0: { cellWidth: 180, fontStyle: 'bold' },
+      1: { cellWidth: 335 },
+    },
+    margin: { left: 40, right: 40 },
+  });
+
+  currentY = (doc as any).lastAutoTable.finalY + 30;
+  doc.setFontSize(9);
+  doc.setTextColor(mutedTextColor[0], mutedTextColor[1], mutedTextColor[2]);
+  doc.text('Catatan: Bukti pencairan komisi ini sah dan dihasilkan secara otomatis oleh sistem PulseTrack.', 40, currentY);
+  doc.text('Terkirim otomatis ke WhatsApp Owner (+62 878-4419-5778) untuk verifikasi transfer bank.', 40, currentY + 14);
+
+  doc.save(`bukti_pencairan_komisi_${Date.now()}.pdf`);
+}
+

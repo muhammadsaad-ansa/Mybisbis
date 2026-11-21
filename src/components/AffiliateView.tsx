@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import { WithdrawalRequest } from '../types';
 import { sendGmailVerification } from '../services/gmailService';
+import { exportAffiliateWithdrawalPDF } from '../utils/exportUtils';
 
 export const AffiliateView: React.FC = () => {
   const { 
@@ -202,10 +203,21 @@ export const AffiliateView: React.FC = () => {
 
     setIsWithdrawModalOpen(false);
     const isAll = amt === (user?.affiliateBalance || 0);
+    const timestampStr = new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'medium' });
+
+    // Generate and download PDF receipt automatically with timestamp
+    exportAffiliateWithdrawalPDF({
+      amount: amt,
+      method: withdrawMethod,
+      accountNumber,
+      accountHolder,
+      user,
+      timestampStr,
+    });
     
-    // Automatically open WhatsApp to +62 878-4419-5778 with complete withdrawal payload
+    // Automatically open WhatsApp to +62 878-4419-5778 with complete withdrawal payload and timestamp
     const waText = encodeURIComponent(
-      `Halo Owner Nisa Ad,\n\nSaya mengajukan pencairan komisi Afiliasi Juara PulseTrack:\n\n- Nama Akun: ${user?.name || accountHolder}\n- Nama Pemilik: ${accountHolder}\n- Nominal Penarikan: Rp ${amt.toLocaleString('id-ID')}\n- Metode Tujuan: ${withdrawMethod}\n- No. Rekening: ${accountNumber}\n- Email: ${user?.email || 'nisaad1526@gmail.com'}\n\nMohon verifikasi dan transfer ke rekening tersebut. Terima kasih!`
+      `Halo Owner Nisa Ad,\n\nSaya mengajukan pencairan komisi Afiliasi Juara PulseTrack:\n\n- Waktu Pencairan (Timestamp): ${timestampStr}\n- Nama Akun: ${user?.name || accountHolder}\n- Nama Pemilik: ${accountHolder}\n- Nominal Penarikan: Rp ${amt.toLocaleString('id-ID')}\n- Metode Tujuan: ${withdrawMethod}\n- No. Rekening: ${accountNumber}\n- Email: ${user?.email || 'review@pulsetrack.com'}\n\n[Bukti Laporan PDF Pencairan Telah Digenerate]\n\nMohon verifikasi dan transfer ke rekening tersebut. Terima kasih!`
     );
     window.open(`https://wa.me/6287844195778?text=${waText}`, '_blank');
 
