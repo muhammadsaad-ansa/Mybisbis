@@ -74,7 +74,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCreateLink, isDarkMode, to
     { id: 'membership', label: 'Mode Member', icon: <Crown className="w-4 h-4 text-amber-500" /> },
     { id: 'affiliate', label: 'Afiliasi Juara', icon: <Share2 className="w-4 h-4 text-emerald-500" />, badge: 'Rp 10rb' },
     { id: 'seo', label: 'SEO & OpenGraph', icon: <Globe className="w-4 h-4 text-violet-500" />, badge: 'OG' },
-    ...(isAdmin ? [{ id: 'admin' as ActiveTab, label: 'Panel Owner', icon: <ShieldCheck className="w-4 h-4 text-violet-500" />, badge: 'VIP' }] : []),
   ];
 
   return (
@@ -201,44 +200,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCreateLink, isDarkMode, to
 
             {isAuthenticated ? (
               <div className="flex items-center gap-2">
-                {/* Logo Member VIP / Super Admin */}
-                {isAdmin ? (
-                  <button
-                    onClick={() => setActiveTab('admin')}
-                    className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-violet-600/20 via-indigo-600/20 to-violet-600/20 hover:from-violet-600/30 hover:to-indigo-600/30 border border-violet-500/70 dark:border-violet-500/60 shadow-xs cursor-pointer group transition-all shrink-0"
-                    title="Akun Super Admin Pribadi (Gratis Seumur Hidup) - Klik untuk Panel Admin"
-                  >
-                    <div className="w-5 h-5 rounded-lg bg-gradient-to-tr from-violet-600 via-indigo-600 to-amber-400 flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
-                      <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5]" />
-                    </div>
-                    <div className="text-left hidden sm:block">
-                      <span className="text-[11px] font-black text-violet-800 dark:text-violet-300 font-mono tracking-wider block leading-none">
-                        SUPER ADMIN
-                      </span>
-                      <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold leading-none block mt-0.5">
-                        GRATIS SEUMUR HIDUP
-                      </span>
-                    </div>
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => setActiveTab('membership')}
-                    className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 via-amber-400/15 to-amber-500/20 hover:from-amber-500/30 hover:to-amber-400/25 border border-amber-400/70 dark:border-amber-500/60 shadow-xs cursor-pointer group transition-all shrink-0"
-                    title="Status Member VIP Aktif (Rp 60.000/bln) - Klik untuk detail keanggotaan"
-                  >
-                    <div className="w-5 h-5 rounded-lg bg-gradient-to-tr from-amber-500 via-amber-400 to-amber-200 flex items-center justify-center text-amber-950 shadow-xs group-hover:scale-105 transition-transform">
-                      <Crown className="w-3.5 h-3.5 fill-amber-950 stroke-[2.5]" />
-                    </div>
-                    <div className="text-left hidden sm:block">
-                      <span className="text-[11px] font-black text-amber-800 dark:text-amber-300 font-mono tracking-wider block leading-none">
-                        MEMBER VIP
-                      </span>
-                      <span className="text-[9px] text-amber-600 dark:text-amber-400 font-medium leading-none block mt-0.5">
-                        Rp 60.000 / bln
-                      </span>
-                    </div>
-                  </button>
-                )}
+                {/* Logo Member VIP */}
+                <button
+                  onClick={() => setActiveTab('membership')}
+                  className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 via-amber-400/15 to-amber-500/20 hover:from-amber-500/30 hover:to-amber-400/25 border border-amber-400/70 dark:border-amber-500/60 shadow-xs cursor-pointer group transition-all shrink-0"
+                  title="Status Member VIP Aktif (Rp 60.000/bln) - Klik untuk detail keanggotaan"
+                >
+                  <div className="w-5 h-5 rounded-lg bg-gradient-to-tr from-amber-500 via-amber-400 to-amber-200 flex items-center justify-center text-amber-950 shadow-xs group-hover:scale-105 transition-transform">
+                    <Crown className="w-3.5 h-3.5 fill-amber-950 stroke-[2.5]" />
+                  </div>
+                  <div className="text-left hidden sm:block">
+                    <span className="text-[11px] font-black text-amber-800 dark:text-amber-300 font-mono tracking-wider block leading-none">
+                      MEMBER VIP
+                    </span>
+                    <span className="text-[9px] text-amber-600 dark:text-amber-400 font-medium leading-none block mt-0.5">
+                      Rp 60.000 / bln
+                    </span>
+                  </div>
+                </button>
 
                 {/* Profile menu dropdown */}
                 <div ref={profileMenuRef} className="relative">
@@ -276,12 +255,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCreateLink, isDarkMode, to
                         <p className="text-xs text-slate-500 truncate">{user?.email}</p>
                         <div className="mt-1 flex items-center justify-between">
                           <span className="text-[11px] text-indigo-600 dark:text-indigo-400 font-medium truncate max-w-[140px]">{user?.brandName}</span>
-                          <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
-                            isAdmin 
-                              ? 'bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-300' 
-                              : 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400'
-                          }`}>
-                            {isAdmin ? 'SUPER ADMIN (GRATIS)' : 'MEMBER VIP'}
+                          <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400">
+                            MEMBER VIP
                           </span>
                         </div>
                       </div>
@@ -302,23 +277,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCreateLink, isDarkMode, to
                             Galeri
                           </span>
                         </button>
-                        {isAdmin && (
-                          <button
-                            onClick={() => {
-                              setActiveTab('admin');
-                              setIsProfileMenuOpen(false);
-                            }}
-                            className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-violet-700 dark:text-violet-300 bg-violet-50/70 dark:bg-violet-950/40 hover:bg-violet-100 rounded-lg text-left mb-1"
-                          >
-                            <div className="flex items-center gap-2">
-                              <ShieldCheck className="w-3.5 h-3.5 text-violet-600" />
-                              <span>Panel Super Admin</span>
-                            </div>
-                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-violet-200 dark:bg-violet-900 text-violet-800 dark:text-violet-200">
-                              GRATIS
-                            </span>
-                          </button>
-                        )}
                         <button
                           onClick={() => {
                             setActiveTab('membership');

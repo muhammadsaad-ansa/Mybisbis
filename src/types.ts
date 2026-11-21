@@ -136,8 +136,7 @@ export type ActiveTab =
   | 'simulator' 
   | 'membership' 
   | 'affiliate' 
-  | 'seo'
-  | 'admin';
+  | 'seo';
 
 // ================= STOCK ANALYSIS TYPES =================
 export type StockCurrency = 'IDR' | 'USD';

@@ -28,7 +28,6 @@ import { TrendingRadarView } from './components/TrendingRadarView';
 import { ResetAnalyticsModal } from './components/ResetAnalyticsModal';
 import { UserProfileModal } from './components/UserProfileModal';
 import { SeoToolsView } from './components/SeoToolsView';
-import { AdminView } from './components/AdminView';
 import { FinanceProvider } from './context/FinanceContext';
 import { TrafficAlertProvider } from './context/TrafficAlertContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -155,8 +154,6 @@ function MainApp() {
             {activeTab === 'finance' && <FinanceView />}
 
             {activeTab === 'stocks' && <StockAnalysisView />}
-
-            {activeTab === 'admin' && <AdminView />}
           </>
         )}
       </main>

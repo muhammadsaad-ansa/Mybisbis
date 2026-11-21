@@ -21,7 +21,7 @@ import {
 import { useAnalytics } from '../context/AnalyticsContext';
 
 export const MembershipView: React.FC = () => {
-  const { user, isMember, isAdmin, openPaymentModal } = useAuth();
+  const { user, isMember, openPaymentModal } = useAuth();
   const { setActiveTab } = useAnalytics();
   const [copiedType, setCopiedType] = useState<string | null>(null);
 
@@ -63,66 +63,37 @@ export const MembershipView: React.FC = () => {
       </div>
 
       {/* Active Membership Status Card */}
-      <div className={`p-6 rounded-3xl border shadow-sm transition-all ${
-        isAdmin
-          ? 'bg-gradient-to-r from-violet-600/15 via-indigo-600/15 to-purple-600/15 border-violet-400 dark:border-violet-600/60'
-          : 'bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-rose-500/10 border-amber-300 dark:border-amber-700/60'
-      }`}>
+      <div className="p-6 rounded-3xl border shadow-sm transition-all bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-rose-500/10 border-amber-300 dark:border-amber-700/60">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border ${
-              isAdmin
-                ? 'bg-violet-100 dark:bg-violet-950/80 text-violet-800 dark:text-violet-300 border-violet-300 dark:border-violet-700'
-                : 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-700'
-            }`}>
-              {isAdmin ? (
-                <>
-                  <ShieldCheck className="w-4 h-4 text-violet-600 dark:text-violet-400" />
-                  <span>AKUN SUPER ADMIN (100% GRATIS SEUMUR HIDUP)</span>
-                </>
-              ) : (
-                <>
-                  <Crown className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                  <span>MEMBER VIP AKTIF (Rp 60.000 / Bulan)</span>
-                </>
-              )}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
+              <Crown className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <span>MEMBER VIP AKTIF (Rp 60.000 / Bulan)</span>
             </div>
 
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-              {isAdmin 
-                ? 'Hak Akses Super Admin Terbuka Penuh & Bebas Biaya' 
-                : 'Seluruh Fitur Profesional & Afiliasi Terbuka Penuh'}
+              Seluruh Fitur Profesional & Afiliasi Terbuka Penuh
             </h2>
 
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-              {isAdmin
-                ? `Akun pribadi Anda (${user?.email}) memiliki lisensi Master Administrator gratis seumur hidup. Seluruh fitur profesional, tautan medsos, analitik vidio, pencatatan uang pribadi, analis saham, dan penarikan komisi ke Bank BSI (7373448995) aktif tanpa jatuh tempo.`
-                : 'Langganan Anda aktif. Anda dapat melacak tautan tanpa batas, memantau detik puncak klik vidio Reels/TikTok, ekspor laporan CSV/PDF, dan berhak mendapatkan komisi Rp 10.000 per referral di Program Afiliasi Juara.'}
+              Langganan Anda aktif. Anda dapat melacak tautan tanpa batas, memantau detik puncak klik vidio Reels/TikTok, ekspor laporan CSV/PDF, dan berhak mendapatkan komisi Rp 10.000 per referral di Program Afiliasi Juara.
             </p>
 
             <div className="flex items-center gap-4 text-xs font-medium text-slate-700 dark:text-slate-300 pt-2">
               <span className="flex items-center gap-1.5 font-mono">
                 <Calendar className="w-4 h-4 text-indigo-500" />
-                Masa Aktif: <strong>{isAdmin ? 'Permanen / Seumur Hidup (Gratis)' : '30 November 2026'}</strong>
+                Masa Aktif: <strong>30 November 2026</strong>
               </span>
               <span className="text-slate-400">·</span>
               <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold">
                 <CheckCircle2 className="w-4 h-4" />
-                {isAdmin ? 'Super Admin Terverifikasi' : 'Status Otomatis Diperbarui'}
+                Status Otomatis Diperbarui
               </span>
             </div>
           </div>
 
           <div className="shrink-0 flex flex-col gap-2.5">
-            {isAdmin ? (
-              <button
-                onClick={() => setActiveTab('admin')}
-                className="flex items-center justify-center gap-2 px-5 py-3 text-xs font-bold text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 rounded-2xl shadow-md transition-all cursor-pointer whitespace-nowrap"
-              >
-                <ShieldCheck className="w-4 h-4" />
-                <span>Buka Panel Admin Utama</span>
-              </button>
-            ) : !isMember ? (
+            {!isMember ? (
               <button
                 onClick={openPaymentModal}
                 className="flex items-center justify-center gap-2 px-5 py-3 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-2xl shadow-md transition-all cursor-pointer whitespace-nowrap"
